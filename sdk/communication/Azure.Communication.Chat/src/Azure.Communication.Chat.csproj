@@ -32,5 +32,10 @@
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Common" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Trouter">
+      <HintPath>..\..\..\..\..\..\TrouterSource\netstandard2.0\Microsoft.Trouter.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

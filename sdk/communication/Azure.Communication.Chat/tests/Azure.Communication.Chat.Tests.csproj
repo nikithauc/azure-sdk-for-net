@@ -23,4 +23,9 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" LinkBase="Shared\Communication" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Trouter">
+      <HintPath>..\..\..\..\..\..\TrouterSource\netstandard2.0\Microsoft.Trouter.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Microsoft.Trouter;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.ChatClients
@@ -522,7 +524,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
 
             //act
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant});
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant });
 
             //assert
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
@@ -597,6 +599,53 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private ChatThreadClient CreateMockChatThreadClient(int responseCode, string? responseContent = null, string threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2")
         {
             return CreateMockChatClient(responseCode, responseContent).GetChatThreadClient(threadId);
+        }
+
+        [Test]
+        public void Test()
+        {
+            var options = new TrouterClientOptions
+            {
+                TrouterHostName = "go.trouter-int.teams.microsoft.net",
+                ApplicationName = "Microsoft.Trouter.Tests"
+            };
+            var trouterClient = new TrouterClient(null!, options);
+
+            Assert.IsNotNull(trouterClient);
+        }
+
+
+        private class CommunicationListener : TrouterListener
+        {
+            public CommunicationListener() { }
+            public override Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
+            {
+                var options = new TrouterClientOptions
+                {
+                    TrouterHostName = "go.trouter-int.teams.microsoft.net",
+                    ApplicationName = "Microsoft.Trouter.Tests"
+                };
+
+                var credential = new TestSkypetokenCredential();
+                var client = new TrouterClient(credential, options);
+                client.Connected += OnTrouterClientConnected;
+                var requestBody = request.Body.ToString();
+                return Task.FromResult(new TrouterResponse { Body = new BinaryData(requestBody) });
+            }
+
+            private Task OnTrouterClientConnected(TrouterConnectedEventArgs arg)
+            {
+                return Task.CompletedTask;
+            }
+        }
+        private sealed class TestSkypetokenCredential : SkypetokenCredential
+        {
+            public override async Task<Skypetoken> GetTokenAsync(CancellationToken cancellationToken = default)
+            {
+                var testToken = "";
+                return new Skypetoken(testToken);
+                ;
+            }
         }
     }
 }
