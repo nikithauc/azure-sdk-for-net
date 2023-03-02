@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Chat.Notifications.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -244,5 +245,16 @@ namespace Azure.Communication.Chat
             var authenticationPolicy = new BearerTokenAuthenticationPolicy(bearerTokenCredential, "");
             return HttpPipelineBuilder.Build(options, authenticationPolicy);
         }
+
+        public event SyncAsyncEventHandler<ChatMessageReceivedEvent> ChatMessageReceived;
+        public event SyncAsyncEventHandler<ChatMessageEditedEvent> ChatMessageEdited;
+        public event SyncAsyncEventHandler<ChatMessageDeletedEvent> ChatMessageDeleted;
+        public event SyncAsyncEventHandler<TypingIndicatorReceivedEvent> TypingIndicatorReceived;
+        public event SyncAsyncEventHandler<ReadReceiptReceivedEvent> ReadReceiptReceived;
+        public event SyncAsyncEventHandler<ChatThreadCreatedEvent> ChatThreadCreated;
+        public event SyncAsyncEventHandler<ChatThreadDeletedEvent> ChatThreadDeleted;
+        public event SyncAsyncEventHandler<ChatThreadPropertiesUpdatedEvent> ChatThreadPropertiesUpdated;
+        public event SyncAsyncEventHandler<ParticipantsAddedEvent> ParticipantsAdded;
+        public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
     }
 }
