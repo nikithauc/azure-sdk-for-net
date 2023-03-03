@@ -90,7 +90,7 @@ namespace Azure.Communication.Chat
             try
             {
                 idempotencyToken ??= Guid.NewGuid().ToString();
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(topic, idempotencyToken,participants.Select(x => x.ToChatParticipantInternal()), cancellationToken);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(topic, idempotencyToken, participants.Select(x => x.ToChatParticipantInternal()), cancellationToken);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -199,7 +199,7 @@ namespace Azure.Communication.Chat
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc,  NextPageFunc);
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Deletes a thread asynchronously. </summary>
@@ -263,19 +263,7 @@ namespace Azure.Communication.Chat
         //public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
 
         /// <summary>
-        /// Set the custom Handler
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="chatEventType"></param>
-        /// <param name="realTimeNotificationEventHandler"></param>
-        /// <param name="eventArgs"></param>
-        public void AddEventHandler<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T:ChatEvent
-        {
-            _communicationSignalingClient.on<T>(chatEventType, realTimeNotificationEventHandler, eventArgs);
-        }
-
-        /// <summary>
-        /// Start trouter configurations
+        /// Start trouter client
         /// </summary>
         /// <returns></returns>
         public async Task StartRealTimeNotifications()
@@ -284,12 +272,32 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary>
-        /// Stop trouter configurations
+        /// Stop trouter stop
         /// </summary>
         /// <returns></returns>
         public async Task StopRealTimeNotifications()
         {
             await _communicationSignalingClient.Stop().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Set the custom Handler
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="chatEventType"></param>
+        /// <param name="realTimeNotificationEventHandler"></param>
+        /// <param name="eventArgs"></param>
+        public void AddEventHandler<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T : ChatEvent
+        {
+            _communicationSignalingClient.on<T>(chatEventType, realTimeNotificationEventHandler, eventArgs);
+        }
+
+        /// <summary>
+        /// Remove the event handler for a given event
+        /// </summary>
+        /// <param name="chatEventType"></param>
+        public void RemoveEventHandler(ChatEventType chatEventType)
+        {
         }
     }
 }

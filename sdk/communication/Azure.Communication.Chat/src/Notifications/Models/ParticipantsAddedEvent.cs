@@ -6,12 +6,26 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
-    public class ParticipantsAddedEvent
+    public class ParticipantsAddedEvent : ChatThreadEvent
     {
-        public  DateTime AddedOn { get; set; }
+        public DateTime AddedOn { get; set; }
 
-        public  ChatParticipant AddedBy { get; set; }
+        public ChatParticipant AddedBy { get; set; }
 
-        public List<ChatParticipant> ParticipantsAdded { get; set; }
+        private List<ChatParticipant> _participantAdded;
+
+        public List<ChatParticipant> ParticipantsAdded
+        {
+            get { return _participantAdded; }
+            set
+            {
+                if (_participantAdded == null)
+                {
+                    _participantAdded = new List<ChatParticipant> { value };
+                }
+                else
+                { }
+            }
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Chat.Notifications.Models;
@@ -7,12 +10,11 @@ using Microsoft.Trouter;
 
 namespace Azure.Communication.Chat.Notifications
 {
-    public class CommunicationListener<T> : TrouterListener where T : ChatEvent
+    internal class CommunicationListener<T> : TrouterListener where T : ChatEvent
     {
         private string _eventType;
         private RealTimeNotificationEventHandler<T> _realTimeNotificationEventHandler;
         private T _eventArgs;
-
 
         /// <summary>
         /// Implementation of TrouterListener
@@ -34,4 +36,3 @@ namespace Azure.Communication.Chat.Notifications
         }
     }
 }
-

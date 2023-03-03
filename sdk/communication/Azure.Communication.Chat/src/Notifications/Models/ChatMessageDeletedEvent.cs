@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
-    public class ChatMessageDeletedEvent: ChatUserEvent
+    public class ChatMessageDeletedEvent : ChatUserEvent
     {
         public DateTime DeletedOn { get; set; }
 

@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Threading.Tasks;
 using Azure.Communication.Chat.Notifications.Models;
-using Azure.Core;
 using Microsoft.Trouter;
 
 namespace Azure.Communication.Chat.Notifications
 {
-    public class CommunicationSignalingClient
+    internal class CommunicationSignalingClient: IDisposable
     {
         private TrouterClient _trouterClient;
         private bool _isRealTimeNotificationsStarted;
-        private Dictionary<ChatEventType, CommunicationListener> trouterListeners = new Dictionary<ChatEventType, CommunicationListener>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task Start()
         {
+            await _trouterClient.StartAsync().ConfigureAwait(false);
             _isRealTimeNotificationsStarted = true;
             CreateTrouterService();
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task Stop()
@@ -39,18 +38,26 @@ namespace Azure.Communication.Chat.Notifications
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>
         private void CreateTrouterService()
         {
             _trouterClient = new TrouterClient(null, null);
         }
 
-        public void on<T> (ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T : ChatEvent
+        public void on<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T : ChatEvent
         {
             var listener = new CommunicationListener<T>(chatEventType.ToString(), realTimeNotificationEventHandler, eventArgs);
             _trouterClient.RegisterListener("", listener);
+        }
+
+        public void off<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T : ChatEvent
+        {
+            //_trouterClient.RegisterListener("", realTimeNotificationEventHandler);
+        }
+        public void Dispose()
+        {
+            _trouterClient.Dispose();
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -19,6 +22,6 @@ namespace Azure.Communication.Chat.Notifications.Models
 
         public string Version { get; set; }
 
-        public HashSet<string, string> MetaData { get; set; }
+        public Dictionary<string, string> MetaData { get; set; }
     }
 }

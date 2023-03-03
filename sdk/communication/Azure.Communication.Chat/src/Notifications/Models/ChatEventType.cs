@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,7 +10,6 @@ namespace Azure.Communication.Chat.Notifications.Models
     public sealed class ChatEventType
     {
         private ChatEventType(string value) { Value = value; }
-
         public string Value { get; private set; }
 
         public static ChatEventType CHAT_MESSAGE_RECEIVED { get { return new ChatEventType("chatMessageReceived"); } }

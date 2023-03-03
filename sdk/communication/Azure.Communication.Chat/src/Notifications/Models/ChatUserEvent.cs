@@ -1,9 +1,11 @@
-﻿
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
-    public abstract class ChatUserEvent: ChatEvent
+    public abstract class ChatUserEvent : ChatEvent
     {
         private string senderId { get; set; }
         private string recipientMri { get; set; }

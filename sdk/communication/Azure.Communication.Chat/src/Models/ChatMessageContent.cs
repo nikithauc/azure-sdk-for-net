@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
         {
             Initiator = communicationUserIdentifier;
             Message = message;
-            Topic =topic;
+            Topic = topic;
             Participants = participants;
         }
 
