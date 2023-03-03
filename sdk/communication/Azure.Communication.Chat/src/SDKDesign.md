@@ -10,11 +10,11 @@ public class Sample{
         realTimeNotificationHandler.ChatEventHandler += ChatMessageReceivedHandler;
 
         chatClient.startRealTimeNotifications();
-        chatClient.AddEventHandler(ChatEventType.CHAT_MESSAGE_RECEIVED,realTimeNotificationHandler)
+        chatClient.AddEventHandler(ChatEventType.CHAT_MESSAGE_RECEIVED, realTimeNotificationHandler)
     }
     public static void ChatMessageReceivedHandler(ChatMessageReceivedEvent args)
     {
-        Console.WriteLine("Process Completed!");
+        Console.WriteLine("Notification Received");
     }
 }
 ```
@@ -52,7 +52,8 @@ public class RealTimeNotificationEventHandler<T> where T : ChatEvent
 
 *ChatEvent.cs*
 ```cs
-public abstract class ChatEvent : SyncAsyncEventArgs{
+public abstract class ChatEvent : SyncAsyncEventArgs
+{
      protected ChatEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken);
 
      public string ThreadId { get; set; }
@@ -63,26 +64,26 @@ public abstract class ChatEvent : SyncAsyncEventArgs{
 *ChatEventType.cs*
 ```cs
 public sealed class ChatEventType
+{
+    private ChatEventType(string value) { Value = value; }
+    public string Value { get; private set; }
+
+    public static ChatEventType CHAT_MESSAGE_RECEIVED { get { return new ChatEventType("chatMessageReceived"); } }
+    public static ChatEventType CHAT_MESSAGE_EDITED { get { return new ChatEventType("chatMessageEdited"); } }
+    public static ChatEventType CHAT_MESSAGE_DELETED { get { return new ChatEventType("chatMessageDeleted"); } }
+    public static ChatEventType TYPING_INDICATOR_RECEIVED { get { return new ChatEventType("typingIndicatorReceived"); } }
+    public static ChatEventType READ_RECEIPT_RECEIVED { get { return new ChatEventType("readReceiptReceived"); } }
+    public static ChatEventType CHAT_THREAD_CREATED { get { return new ChatEventType("chatThreadCreated"); } }
+    public static ChatEventType CHAT_THREAD_DELETED { get { return new ChatEventType("chatThreadDeleted"); } }
+    public static ChatEventType CHAT_THREAD_PROPERTIES_UPDATED { get { return new ChatEventType("chatThreadPropertiesUpdated"); } }
+    public static ChatEventType PARTICIPANTS_ADDED { get { return new ChatEventType("participantsAdded"); } }
+    public static ChatEventType PARTICIPANTS_REMOVED { get { return new ChatEventType("participantsRemoved"); } }
+
+    public override string ToString()
     {
-        private ChatEventType(string value) { Value = value; }
-        public string Value { get; private set; }
-
-        public static ChatEventType CHAT_MESSAGE_RECEIVED { get { return new ChatEventType("chatMessageReceived"); } }
-        public static ChatEventType CHAT_MESSAGE_EDITED { get { return new ChatEventType("chatMessageEdited"); } }
-        public static ChatEventType CHAT_MESSAGE_DELETED { get { return new ChatEventType("chatMessageDeleted"); } }
-        public static ChatEventType TYPING_INDICATOR_RECEIVED { get { return new ChatEventType("typingIndicatorReceived"); } }
-        public static ChatEventType READ_RECEIPT_RECEIVED { get { return new ChatEventType("readReceiptReceived"); } }
-        public static ChatEventType CHAT_THREAD_CREATED { get { return new ChatEventType("chatThreadCreated"); } }
-        public static ChatEventType CHAT_THREAD_DELETED { get { return new ChatEventType("chatThreadDeleted"); } }
-        public static ChatEventType CHAT_THREAD_PROPERTIES_UPDATED { get { return new ChatEventType("chatThreadPropertiesUpdated"); } }
-        public static ChatEventType PARTICIPANTS_ADDED { get { return new ChatEventType("participantsAdded"); } }
-        public static ChatEventType PARTICIPANTS_REMOVED { get { return new ChatEventType("participantsRemoved"); } }
-
-        public override string ToString()
-        {
-            return Value;
-        }
+        return Value;
     }
+}
 ```
 
 *ChatUserEvent.cs*
@@ -222,11 +223,11 @@ public class ReadReceiptReceivedEvent : ChatUserEvent
 ```cs
 public class TypingIndicatorReceivedEvent: ChatUserEvent
 {
-        public string Version { get; set; }
+    public string Version { get; set; }
 
-        public DateTime ReceivedOn { get; set; }
+    public DateTime ReceivedOn { get; set; }
 
-        public String SenderDisplayName { get; set; }
+    public String SenderDisplayName { get; set; }
 }
 ```
 
