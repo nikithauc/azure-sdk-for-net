@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
+    /// <summary>
+    /// Chat event
+    /// </summary>
     public abstract class ChatEvent : SyncAsyncEventArgs
     {
         /// <summary>

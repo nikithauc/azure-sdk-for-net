@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Chat.Notifications;
 using Azure.Communication.Chat.Notifications.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
@@ -23,6 +24,7 @@ namespace Azure.Communication.Chat
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
+        private readonly CommunicationSignalingClient _communicationSignalingClient;
 
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
         /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
@@ -38,6 +40,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
+            _communicationSignalingClient = new CommunicationSignalingClient();
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
@@ -246,15 +249,47 @@ namespace Azure.Communication.Chat
             return HttpPipelineBuilder.Build(options, authenticationPolicy);
         }
 
-        public event SyncAsyncEventHandler<ChatMessageReceivedEvent> ChatMessageReceived;
-        public event SyncAsyncEventHandler<ChatMessageEditedEvent> ChatMessageEdited;
-        public event SyncAsyncEventHandler<ChatMessageDeletedEvent> ChatMessageDeleted;
-        public event SyncAsyncEventHandler<TypingIndicatorReceivedEvent> TypingIndicatorReceived;
-        public event SyncAsyncEventHandler<ReadReceiptReceivedEvent> ReadReceiptReceived;
-        public event SyncAsyncEventHandler<ChatThreadCreatedEvent> ChatThreadCreated;
-        public event SyncAsyncEventHandler<ChatThreadDeletedEvent> ChatThreadDeleted;
-        public event SyncAsyncEventHandler<ChatThreadPropertiesUpdatedEvent> ChatThreadPropertiesUpdated;
-        public event SyncAsyncEventHandler<ParticipantsAddedEvent> ParticipantsAdded;
-        public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
+        //Check how the following fits.
+
+        //public event SyncAsyncEventHandler<ChatMessageReceivedEvent> ChatMessageReceived;
+        //public event SyncAsyncEventHandler<ChatMessageEditedEvent> ChatMessageEdited;
+        //public event SyncAsyncEventHandler<ChatMessageDeletedEvent> ChatMessageDeleted;
+        //public event SyncAsyncEventHandler<TypingIndicatorReceivedEvent> TypingIndicatorReceived;
+        //public event SyncAsyncEventHandler<ReadReceiptReceivedEvent> ReadReceiptReceived;
+        //public event SyncAsyncEventHandler<ChatThreadCreatedEvent> ChatThreadCreated;
+        //public event SyncAsyncEventHandler<ChatThreadDeletedEvent> ChatThreadDeleted;
+        //public event SyncAsyncEventHandler<ChatThreadPropertiesUpdatedEvent> ChatThreadPropertiesUpdated;
+        //public event SyncAsyncEventHandler<ParticipantsAddedEvent> ParticipantsAdded;
+        //public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
+
+        /// <summary>
+        /// Set the custom Handler
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="chatEventType"></param>
+        /// <param name="realTimeNotificationEventHandler"></param>
+        /// <param name="eventArgs"></param>
+        public void AddEventHandler<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T:ChatEvent
+        {
+            _communicationSignalingClient.on<T>(chatEventType, realTimeNotificationEventHandler, eventArgs);
+        }
+
+        /// <summary>
+        /// Start trouter configurations
+        /// </summary>
+        /// <returns></returns>
+        public async Task StartRealTimeNotifications()
+        {
+            await _communicationSignalingClient.Start().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Stop trouter configurations
+        /// </summary>
+        /// <returns></returns>
+        public async Task StopRealTimeNotifications()
+        {
+            await _communicationSignalingClient.Stop().ConfigureAwait(false);
+        }
     }
 }
