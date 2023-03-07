@@ -293,11 +293,21 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary>
-        /// Remove the event handler for a given event
+        /// Set the custom Handler
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="chatEventType"></param>
-        public void RemoveEventHandler(ChatEventType chatEventType)
+        /// <param name="realTimeNotificationEventHandler"></param>
+        /// <param name="eventArgs"></param>
+        public void RemoveEventHandler<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T : ChatEvent
         {
+            _communicationSignalingClient.on<T>(chatEventType, realTimeNotificationEventHandler, eventArgs);
+        }
+
+        private static void Dispose()
+        {
+            Console.WriteLine("");
+            //throw new NotImplementedException();
         }
     }
 }

@@ -6,12 +6,24 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
+    /// <summary>
+    /// Moddel Class
+    /// </summary>
     public class ParticipantsRemovedEvent : ChatThreadEvent
     {
-        public DateTime RemovedOn { get; set; }
+        /// <summary>
+        /// Property
+        /// </summary>
+        public DateTime RemovedOn { get;  }
 
-        public ChatParticipant RemovedBy { get; set; }
+        /// <summary>
+        /// Property
+        /// </summary>
+        public ChatParticipant RemovedBy { get; }
 
-        public List<ChatParticipant> ParticipantsRemoved { get; set; }
+        /// <summary>
+        /// Property
+        /// </summary>
+        public List<ChatParticipant> ParticipantsRemoved { get; } = new List<ChatParticipant> ();
     }
 }

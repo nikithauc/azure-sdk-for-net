@@ -614,7 +614,6 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.IsNotNull(trouterClient);
         }
 
-
         private class CommunicationListener : TrouterListener
         {
             public CommunicationListener() { }

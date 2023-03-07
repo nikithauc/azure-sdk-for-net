@@ -7,10 +7,20 @@ using System.Text;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
+    /// <summary>
+    /// Property
+    /// </summary>
     public class ChatThreadDeletedEvent : ChatThreadEvent
     {
+        /// <summary>
+        /// Property
+        /// </summary>
         public DateTime DeletedOn { get; set; }
 
+
+        /// <summary>
+        /// Property
+        /// </summary>
         public ChatParticipant DeletedBy { get; set; }
     }
 }

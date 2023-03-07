@@ -7,8 +7,14 @@ using System.Text;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
-    public abstract class ChatThreadEvent : ChatEvent
+    /// <summary>
+    /// Property
+    /// </summary>
+    public abstract class ChatThreadEvent
     {
+        /// <summary>
+        /// Property
+        /// </summary>
         public string Version { get; set; }
     }
 }

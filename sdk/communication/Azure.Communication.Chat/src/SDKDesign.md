@@ -46,6 +46,18 @@ public class ChatClient
 public class RealTimeNotificationEventHandler<T> where T : ChatEvent
 {
     public event SyncAsyncEventHandler<T> ChatEventHandler;
+    public event SyncAsyncEventHandler<ChatMessageReceivedEvent> ChatMessageReceived;
+    public event SyncAsyncEventHandler<ChatMessageEditedEvent> ChatMessageEdited;
+    public event SyncAsyncEventHandler<ChatMessageDeletedEvent> ChatMessageDeleted;
+    public event SyncAsyncEventHandler<TypingIndicatorReceivedEvent> TypingIndicatorReceived;
+    public event SyncAsyncEventHandler<ReadReceiptReceivedEvent> ReadReceiptReceived;
+    public event SyncAsyncEventHandler<ChatThreadCreatedEvent> ChatThreadCreated;
+    public event SyncAsyncEventHandler<ChatThreadDeletedEvent> ChatThreadDeleted;
+    public event SyncAsyncEventHandler<ChatThreadPropertiesUpdatedEvent> ChatThreadPropertiesUpdated;
+    public event SyncAsyncEventHandler<ParticipantsAddedEvent> ParticipantsAdded;
+    public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
+
+    
     public void InvokeEvent(T eventArguments);
 }
 ```

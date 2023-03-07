@@ -8,7 +8,9 @@ using Microsoft.Trouter;
 
 namespace Azure.Communication.Chat.Notifications
 {
-    internal class CommunicationSignalingClient: IDisposable
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
+    internal class CommunicationSignalingClient
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private TrouterClient _trouterClient;
         private bool _isRealTimeNotificationsStarted;
@@ -51,13 +53,11 @@ namespace Azure.Communication.Chat.Notifications
             _trouterClient.RegisterListener("", listener);
         }
 
-        public void off<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T : ChatEvent
+        public void off<T>(RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler) where T : ChatEvent
         {
-            //_trouterClient.RegisterListener("", realTimeNotificationEventHandler);
-        }
-        public void Dispose()
-        {
-            _trouterClient.Dispose();
+            Console.WriteLine(_trouterClient);
+            Console.WriteLine(realTimeNotificationEventHandler);
+            //_trouterClient.UnregisterListener(realTimeNotificationEventHandler);
         }
     }
 }

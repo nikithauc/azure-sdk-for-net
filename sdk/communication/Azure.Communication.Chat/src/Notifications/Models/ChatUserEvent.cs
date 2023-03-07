@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
-    public abstract class ChatUserEvent : ChatEvent
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public abstract class ChatUserEvent
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     {
         private string senderId { get; set; }
         private string recipientMri { get; set; }
