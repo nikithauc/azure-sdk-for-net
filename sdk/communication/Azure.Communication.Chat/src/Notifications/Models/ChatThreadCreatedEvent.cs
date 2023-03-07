@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
@@ -12,24 +13,28 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// </summary>
     public class ChatThreadCreatedEvent : ChatThreadEvent
     {
-        /// <summary>
-        /// Property
-        /// </summary>
-        public DateTime CreatedOn { get; set; }
+        internal ChatThreadCreatedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
 
         /// <summary>
         /// Property
         /// </summary>
-        public ChatThreadProperties Properties { get; set; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public List<ChatParticipant> Participants { get; set; }
+        public ChatThreadProperties Properties { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public ChatParticipant CreatedBy { get; set; }
+        public List<ChatParticipant> Participants { get; } = new List<ChatParticipant>();
+
+        /// <summary>
+        /// Property
+        /// </summary>
+        public ChatParticipant CreatedBy { get; }
     }
 }

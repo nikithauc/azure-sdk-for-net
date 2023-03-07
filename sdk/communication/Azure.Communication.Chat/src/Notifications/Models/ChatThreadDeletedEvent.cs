@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
@@ -12,15 +13,19 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// </summary>
     public class ChatThreadDeletedEvent : ChatThreadEvent
     {
+        internal ChatThreadDeletedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
+
         /// <summary>
         /// Property
         /// </summary>
-        public DateTime DeletedOn { get; set; }
+        public DateTimeOffset? DeletedOn { get; }
 
 
         /// <summary>
         /// Property
         /// </summary>
-        public ChatParticipant DeletedBy { get; set; }
+        public ChatParticipant DeletedBy { get; }
     }
 }

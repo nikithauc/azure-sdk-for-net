@@ -10,29 +10,29 @@ using Microsoft.Trouter;
 
 namespace Azure.Communication.Chat.Notifications
 {
-    internal class CommunicationListener<T> : TrouterListener where T : ChatEvent
+    internal class CommunicationListener : TrouterListener
     {
-        private string _eventType;
-        private RealTimeNotificationEventHandler<T> _realTimeNotificationEventHandler;
-        private T _eventArgs;
+        private ChatEventType _eventType;
+        private RealTimeNotificationEventHandler _realTimeNotificationEventHandler;
 
         /// <summary>
         /// Implementation of TrouterListener
         /// </summary>
         /// <param name="chatEventType"></param>
         /// <param name="realTimeNotificationEventHandler"></param>
-        /// <param name="eventArgs"></param>
-        public CommunicationListener(string chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs)
+        public CommunicationListener(ChatEventType chatEventType, RealTimeNotificationEventHandler realTimeNotificationEventHandler)
         {
             _eventType = chatEventType;
             _realTimeNotificationEventHandler = realTimeNotificationEventHandler;
-            _eventArgs = eventArgs;
         }
 
-        public override Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
+        public override async  Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
         {
             // call the event handler here
-            await _realTimeNotificationEventHandler.InvokeEvent(_eventArgs);
+            await _realTimeNotificationEventHandler.InvokeChatMessageReceivedEvent(new ChatMessageReceivedEvent()).ConfigureAwait(false);
+
+            // may be this should change
+            return (new TrouterResponse());
         }
     }
 }

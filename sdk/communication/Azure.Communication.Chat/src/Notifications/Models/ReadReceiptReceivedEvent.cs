@@ -2,17 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
     public class ReadReceiptReceivedEvent : ChatUserEvent
     {
-        public string ChatMessageId { get; set; }
+        public string ChatMessageId { get; }
 
-        public DateTime ReadOn { get; set; }
+        public DateTime ReadOn { get; }
 
-        public string MessageBody { get; set; }
+        public string MessageBody { get; }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
@@ -13,39 +14,48 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// </summary>
     public class ChatMessageEditedEvent : ChatUserEvent
     {
-        /// <summary>
-        /// Property
-        /// </summary>
-        public string Content { get; set; }
+        internal ChatMessageEditedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
 
         /// <summary>
         /// Property
         /// </summary>
-        public DateTime EditedOn { get; set; }
+        public string Content { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public string Id { get; set; }
+        public DateTimeOffset? EditedOn { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public string SenderDisplayName { get; set; }
+        public string Id { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public DateTime CreatedOn { get; set; }
+        public string SenderDisplayName { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public string Version { get; set; }
+        public DateTimeOffset? CreatedOn { get; }
+
+        /// <summary>
+        /// Property
+        /// </summary>
+        public string Version { get; }
 
         /// <summary>
         /// Property
         /// </summary>
         public Dictionary<string, string> MetaData { get;} = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Property
+        /// </summary>
+        public ChatMessageType type { get; }
     }
 }

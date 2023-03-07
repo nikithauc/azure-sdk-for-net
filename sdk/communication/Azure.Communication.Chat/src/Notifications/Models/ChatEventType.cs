@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.Communication.Chat.Notifications.Models
 {
     /// <summary>
@@ -54,10 +50,23 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// Property
         /// </summary>
         public static ChatEventType ParticipantsAdded { get { return new ChatEventType("participantsAdded"); } }
+
         /// <summary>
         /// Property
         /// </summary>
         public static ChatEventType ParticipantsRemoved { get { return new ChatEventType("participantsRemoved"); } }
+
+
+        /// <summary>
+        /// Property
+        /// </summary>
+        public static ChatEventType RealTimeNotificationConnected { get { return new ChatEventType("realTimeNotificationConnected"); } }
+
+        /// <summary>
+        /// Property
+        /// </summary>
+        public static ChatEventType RealTimeNotificationDisconnected { get { return new ChatEventType("realTimeNotificationDisconnected"); } }
+
         /// <summary>
         /// Property
         /// </summary>

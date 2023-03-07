@@ -15,18 +15,18 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// </summary>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="cancellationToken"></param>
-        protected ChatEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        internal ChatEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
         {
         }
 
         /// <summary>
         /// Chat Thread Id of the event.
         /// </summary>
-        public string ThreadId { get; set; }
+        public string ThreadId { get; }
 
         /// <summary>
         /// Chat Thread Id of the event.
         /// </summary>
-        public string GroupId { get; set; }
+        public string GroupId { get; }
     }
 }

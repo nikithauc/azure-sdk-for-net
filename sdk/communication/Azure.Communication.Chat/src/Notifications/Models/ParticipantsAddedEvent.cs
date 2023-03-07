@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
@@ -11,6 +12,10 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// </summary>
     public class ParticipantsAddedEvent : ChatThreadEvent
     {
+        internal ParticipantsAddedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
+
         /// <summary>
         /// Property
         /// </summary>

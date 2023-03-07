@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
@@ -10,29 +11,33 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// </summary>
     public class ChatMessageDeletedEvent : ChatUserEvent
     {
-        /// <summary>
-        /// Property
-        /// </summary>
-        public DateTime DeletedOn { get; }
+        internal ChatMessageDeletedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
 
         /// <summary>
         /// Property
         /// </summary>
-        public string Id { get; set; }
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public string SenderDisplayName { get; set; }
+        public string Id { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public DateTime CreatedOn { get; set; }
+        public string SenderDisplayName { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public string Version { get; set; }
+        public DateTimeOffset? CreatedOn { get; }
+
+        /// <summary>
+        /// Property
+        /// </summary>
+        public string Version { get; }
     }
 }

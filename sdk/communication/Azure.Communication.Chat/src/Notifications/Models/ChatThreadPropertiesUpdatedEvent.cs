@@ -4,15 +4,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace Azure.Communication.Chat.Notifications.Models
 {
     public class ChatThreadPropertiesUpdatedEvent : ChatThreadEvent
     {
-        public ChatThreadProperties Properties { get; set; }
+        internal ChatThreadPropertiesUpdatedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
 
-        public DateTime UpdatedOn { get; set; }
+        public ChatThreadProperties Properties { get; }
 
-        public ChatParticipant UpdatedBy { get; set; }
+        public DateTimeOffset? UpdatedOn { get; }
+
+        public ChatParticipant UpdatedBy { get; }
     }
 }

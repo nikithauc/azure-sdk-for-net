@@ -47,16 +47,20 @@ namespace Azure.Communication.Chat.Notifications
             _trouterClient = new TrouterClient(null, null);
         }
 
-        public void on<T>(ChatEventType chatEventType, RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler, T eventArgs) where T : ChatEvent
+        public void on(ChatEventType chatEventType, RealTimeNotificationEventHandler realTimeNotificationEventHandler)
         {
-            var listener = new CommunicationListener<T>(chatEventType.ToString(), realTimeNotificationEventHandler, eventArgs);
-            _trouterClient.RegisterListener("", listener);
+            if (chatEventType == ChatEventType.ChatMessageReceived)
+            {
+                var listener = new CommunicationListener(chatEventType, realTimeNotificationEventHandler);
+
+                _trouterClient.RegisterListener("", listener);
+            }
         }
 
-        public void off<T>(RealTimeNotificationEventHandler<T> realTimeNotificationEventHandler) where T : ChatEvent
+        public void off(ChatEventType chatEventType)
         {
-            Console.WriteLine(_trouterClient);
-            Console.WriteLine(realTimeNotificationEventHandler);
+            _trouterClient.UnregisterListener(null);
+            Console.WriteLine(chatEventType);
             //_trouterClient.UnregisterListener(realTimeNotificationEventHandler);
         }
     }
