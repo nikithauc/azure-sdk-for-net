@@ -51,7 +51,7 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public Dictionary<string, string> MetaData { get;} = new Dictionary<string, string>();
+        public Dictionary<string, string> MetaData { get; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Property

@@ -22,7 +22,6 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// </summary>
         public DateTimeOffset? DeletedOn { get; }
 
-
         /// <summary>
         /// Property
         /// </summary>

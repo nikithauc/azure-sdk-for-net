@@ -11,8 +11,9 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// </summary>
     //./ <typeparam name="T"></typeparam>
     //public class RealTimeNotificationEventHandler<T> where T : ChatEvent
-    internal class RealTimeNotificationEventHandler
+    public class RealTimeNotificationEventHandler
     {
+#pragma warning disable CS0067
         ///// <summary>
         ///// EventHandler
         ///// </summary>
@@ -68,6 +69,7 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// </summary>
         public event SyncAsyncEventHandler<ParticipantsRemovedEvent> ParticipantsRemoved;
 
+#pragma warning disable CS0067
         /// <summary>
         /// Invoke the event handler
         /// </summary>

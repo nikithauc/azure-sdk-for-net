@@ -1,13 +1,16 @@
-﻿using System;
-using System.Net.Http;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Trouter;
-using Moq.Protected;
-using Moq;
 using FluentAssertions;
+using Microsoft.Trouter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
 
 namespace Azure.Communication.Chat.Tests.ChatClients
 {

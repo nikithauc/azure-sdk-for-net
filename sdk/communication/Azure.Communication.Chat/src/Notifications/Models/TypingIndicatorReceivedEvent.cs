@@ -4,27 +4,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
     /// <summary>
     ///
     /// </summary>
-    public class TypingIndicatorReceivedEvent: ChatUserEvent
+    public class TypingIndicatorReceivedEvent : ChatUserEvent
     {
-        /// <summary>
-        ///
-        /// </summary>
-        public string Version { get; set; }
+        internal TypingIndicatorReceivedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
 
         /// <summary>
         ///
         /// </summary>
-        public DateTime ReceivedOn { get; set; }
+        public string Version { get; }
 
         /// <summary>
         ///
         /// </summary>
-        public String SenderDisplayName { get; set; }
+        public DateTimeOffset ReceivedOn { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string SenderDisplayName { get; }
     }
 }

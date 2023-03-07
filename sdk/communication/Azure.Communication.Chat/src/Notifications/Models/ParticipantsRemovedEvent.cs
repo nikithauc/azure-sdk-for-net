@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.Communication.Chat.Notifications.Models
 {
@@ -11,10 +12,14 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// </summary>
     public class ParticipantsRemovedEvent : ChatThreadEvent
     {
+        internal ParticipantsRemovedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
+        {
+        }
+
         /// <summary>
         /// Property
         /// </summary>
-        public DateTime RemovedOn { get;  }
+        public DateTimeOffset? RemovedOn { get; }
 
         /// <summary>
         /// Property
@@ -24,6 +29,6 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public List<ChatParticipant> ParticipantsRemoved { get; } = new List<ChatParticipant> ();
+        public List<ChatParticipant> ParticipantsRemoved { get; } = new List<ChatParticipant>();
     }
 }

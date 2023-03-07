@@ -56,7 +56,6 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// </summary>
         public static ChatEventType ParticipantsRemoved { get { return new ChatEventType("participantsRemoved"); } }
 
-
         /// <summary>
         /// Property
         /// </summary>

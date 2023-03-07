@@ -11,7 +11,7 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// <summary>
     /// Property
     /// </summary>
-    public abstract class ChatThreadEvent:ChatEvent
+    public abstract class ChatThreadEvent : ChatEvent
     {
         internal ChatThreadEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
         {

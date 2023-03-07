@@ -26,10 +26,10 @@ namespace Azure.Communication.Chat.Notifications
             _realTimeNotificationEventHandler = realTimeNotificationEventHandler;
         }
 
-        public override async  Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
+        public override async Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
         {
             // call the event handler here
-            await _realTimeNotificationEventHandler.InvokeChatMessageReceivedEvent(new ChatMessageReceivedEvent()).ConfigureAwait(false);
+            await _realTimeNotificationEventHandler.InvokeChatMessageReceivedEvent(new ChatMessageReceivedEvent(false)).ConfigureAwait(false);
 
             // may be this should change
             return (new TrouterResponse());

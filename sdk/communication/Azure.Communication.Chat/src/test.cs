@@ -6,11 +6,11 @@ namespace Azure.Communication.Chat
 {
     internal class test
     {
-        public static void method()
-        {
-            var chat = new ChatMessageReceivedEvent {
-            Content = ""
-            };
-        }
+        //public static void method()
+        //{
+        //    var chat = new ChatMessageReceivedEvent {
+        //    Content = ""
+        //    };
+        //}
     }
 }

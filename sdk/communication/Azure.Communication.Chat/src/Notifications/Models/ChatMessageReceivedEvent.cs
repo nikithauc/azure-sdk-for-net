@@ -11,7 +11,7 @@ namespace Azure.Communication.Chat.Notifications.Models
     /// <summary>
     /// Property
     /// </summary>
-    public class ChatMessageReceivedEvent: ChatUserEvent
+    public class ChatMessageReceivedEvent : ChatUserEvent
     {
         internal ChatMessageReceivedEvent(bool isRunningSynchronously, CancellationToken cancellationToken = default) : base(isRunningSynchronously, cancellationToken)
         {
@@ -20,12 +20,12 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public ChatMessageType Type { get;}
+        public ChatMessageType Type { get; }
 
         /// <summary>
         /// Property
         /// </summary>
-        public string Content { get;}
+        public string Content { get; }
 
         /// <summary>
         /// Property
@@ -55,6 +55,5 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// Property
         /// </summary>
         public Dictionary<string, string> MetaData { get; } = new Dictionary<string, string>();
-
     }
 }
