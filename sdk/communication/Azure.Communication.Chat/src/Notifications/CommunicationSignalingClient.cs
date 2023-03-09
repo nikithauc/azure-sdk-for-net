@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Communication.Chat.Notifications.Models;
-using Microsoft.Trouter;
 
 namespace Azure.Communication.Chat.Notifications
 {
@@ -36,7 +35,7 @@ namespace Azure.Communication.Chat.Notifications
             {
                 return;
             }
-            await _trouterClient.StopAsync().ConfigureAwait(false);
+            await _trouterClient.StartAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -44,24 +43,36 @@ namespace Azure.Communication.Chat.Notifications
         /// </summary>
         private void CreateTrouterService()
         {
-            _trouterClient = new TrouterClient(null, null);
+            _trouterClient = new TrouterClient();
         }
-
+#pragma warning disable CA1822 // Mark members as static
         public void on(ChatEventType chatEventType, RealTimeNotificationEventHandler realTimeNotificationEventHandler)
         {
             if (chatEventType == ChatEventType.ChatMessageReceived)
             {
                 var listener = new CommunicationListener(chatEventType, realTimeNotificationEventHandler);
 
-                _trouterClient.RegisterListener("", listener);
+                //_trouterClient.RegisterListener("", listener);
             }
         }
 
         public void off(ChatEventType chatEventType)
+#pragma warning restore CA1822 // Mark members as static
         {
-            _trouterClient.UnregisterListener(null);
+            //_trouterClient.UnregisterListener(null);
             Console.WriteLine(chatEventType);
             //_trouterClient.UnregisterListener(realTimeNotificationEventHandler);
+        }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class TrouterClient
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        private readonly string _chatEventType = "";
+        internal async Task StartAsync()
+        {
+            await Console.Out.WriteLineAsync(_chatEventType).ConfigureAwait(false);
         }
     }
 }

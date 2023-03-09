@@ -6,11 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Chat.Notifications.Models;
 using Azure.Core;
-using Microsoft.Trouter;
 
 namespace Azure.Communication.Chat.Notifications
 {
-    internal class CommunicationListener : TrouterListener
+    internal class CommunicationListener
     {
         private ChatEventType _eventType;
         private RealTimeNotificationEventHandler _realTimeNotificationEventHandler;
@@ -26,13 +25,13 @@ namespace Azure.Communication.Chat.Notifications
             _realTimeNotificationEventHandler = realTimeNotificationEventHandler;
         }
 
-        public override async Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
-        {
-            // call the event handler here
-            await _realTimeNotificationEventHandler.InvokeChatMessageReceivedEvent(new ChatMessageReceivedEvent(false)).ConfigureAwait(false);
+        //public override async Task<TrouterResponse> ProcessRequestAsync(TrouterRequest request, CancellationToken cancellationToken = default)
+        //{
+        //    // call the event handler here
+        //    await _realTimeNotificationEventHandler.InvokeChatMessageReceivedEvent(new ChatMessageReceivedEvent(false)).ConfigureAwait(false);
 
-            // may be this should change
-            return (new TrouterResponse());
-        }
+        //    // may be this should change
+        //    return (new TrouterResponse());
+        //}
     }
 }
